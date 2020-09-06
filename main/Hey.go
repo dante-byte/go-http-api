@@ -1,16 +1,20 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	//"encoding/json"
 	"net/http"
 )
 
+
 func test(w http.ResponseWriter, r *http.Request)  {
 
-	w.Write([]byte("this is a test"))
 
+
+	json.NewEncoder(w).Encode(struct { // anonymous struct
+		ID string
+	}{ID: "555"})
 }
 
 func main() {
