@@ -2,28 +2,50 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 )
 
 
+
+
+
+
+var data []string = []string{} // composite literal string slice
+
+func main() {
+
+
+	router := mux.NewRouter()
+
+	router.HandleFunc("/test",test)
+
+
+	router.HandleFunc("/add/{item}", addItem)
+
+	http.ListenAndServe(":5000",router)
+	
+}
+
+// route handlers
+
 func test(w http.ResponseWriter, r *http.Request)  {
+
+	w.Header().Set("Content-Type", "application/json")
 
 
 
 	json.NewEncoder(w).Encode(struct { // anonymous struct
 		ID string
-	}{ID: "555"})
+	}{ID: "5"})
 }
 
-func main() {
+func addItem(w http.ResponseWriter, r *http.Request)  {
 
-	fmt.Print("hel")
-	router := mux.NewRouter()
+	routeVar := mux.Vars(r)["item"] // gives access to data
+	data = append(data, routeVar)
 
-	router.HandleFunc("/test",test)
+	json.NewEncoder(w).Encode(data)
 
-	http.ListenAndServe(":5000",router)
-	
+
 }
