@@ -35,9 +35,9 @@ func test(w http.ResponseWriter, r *http.Request)  {
 
 
 
-	json.NewEncoder(w).Encode(struct { // anonymous struct
-		ID string
-	}{ID: "5"})
+	json.NewEncoder(w).Encode(struct { // anonymous struct, a predefined type isn't needed
+		ID string //fields
+	}{ID: "5"}) // value set
 }
 
 func addItem(w http.ResponseWriter, r *http.Request)  {
